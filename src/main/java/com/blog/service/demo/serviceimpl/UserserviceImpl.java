@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -17,6 +19,8 @@ import com.blog.service.repository.UserRepository;
 
 @Service
 public class UserserviceImpl implements UserService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserserviceImpl.class);
 
 	private static final String USER_WITH_ID = "user with id";
 	private static final String NOT_EXISTED = "not existed";
@@ -29,14 +33,15 @@ public class UserserviceImpl implements UserService {
 
 	@Override
 	public UserDTO createUser(UserDTO dto) {
-
+		LOGGER.info("inside create api");
 		if (ObjectUtils.isEmpty(dto)) {
-
+			LOGGER.info("exception occured while creating user:"+ dto);
 			throw new UserNotFoundException("user cant be empty");
+			
 		}
 		User user = toEntity(dto);
 		userRepository.save(user);
-
+		LOGGER.info("user created successfully:"+ dto);
 		return toDto(user);
 	}
 
