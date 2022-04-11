@@ -101,7 +101,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>blog-service</finalName>
+		<finalName>blog-service-app</finalName>
 	</build>
 
 </project>

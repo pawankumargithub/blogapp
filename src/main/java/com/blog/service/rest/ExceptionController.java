@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.blog.service.dto.ErrorResponse;
+import com.blog.service.exception.CategoryNotFoundException;
 import com.blog.service.exception.UserNotFoundException;
 
 @RestControllerAdvice
@@ -38,6 +39,14 @@ public class ExceptionController {
 	public ResponseEntity<ErrorResponse> handleUserNotFoundExcepion(UserNotFoundException ex){
 		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(),new Date(),HttpStatus.INTERNAL_SERVER_ERROR);
 		
+		return new ResponseEntity<>(errorResponse,errorResponse.getStatusCode());
+		
+	}
+	
+	
+	@ExceptionHandler(CategoryNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleCategoryNotFoundException(CategoryNotFoundException ex){
+		ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(),new Date(),HttpStatus.NOT_FOUND);
 		return new ResponseEntity<>(errorResponse,errorResponse.getStatusCode());
 		
 	}
